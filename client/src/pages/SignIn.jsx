@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
-import { async } from "@firebase/util";
+// import { async } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
 const Container = styled.div`
   display: flex;
