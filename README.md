@@ -27,6 +27,7 @@
 
 ## required:
 - make sure to download a vscode extension formatter called "prettier"
-![image](https://github.com/user-attachments/assets/b94bebf6-e072-4273-a9d6-052530d43d15)
+- ![image](https://github.com/user-attachments/assets/5811618a-151f-4f3b-adbf-8e057e4a27f4)
+
 - make sure to always use this formatter whenever you make any changes!
 - to use this formatter, use "alt + shift + f"
