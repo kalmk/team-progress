@@ -94,10 +94,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
             HelloTube
           </Logo>
         </Link>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </Link>
         <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
           <Item>
             <ExploreOutlinedIcon />
@@ -114,7 +116,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
           </Item>
         </Link>
         <Hr />
-        {!currentUser &&
+        {!currentUser && (
           <>
             <Login>
               Sign in to like videos, comment, and subscribe.
@@ -126,7 +128,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
               </Link>
             </Login>
           </>
-        }
+        )}
         <Hr />
         <Item onClick={() => setDarkMode(!darkMode)}>
           <SettingsBrightnessOutlinedIcon />
