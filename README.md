@@ -2,7 +2,8 @@ Current website view:
 ![image](https://github.com/user-attachments/assets/2201dca1-87a1-4018-84d9-8f8f8417fae4)
 ![image](https://github.com/user-attachments/assets/f72fcdf9-f378-461a-9879-5e004a494fdf)
 
-
+# assignments for the team members
+- part of the project are assigned for individual members
 
 ## important message for the team members:
 1) make sure to fork this repo
