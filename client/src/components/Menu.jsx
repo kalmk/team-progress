@@ -115,9 +115,10 @@ const Menu = ({ darkMode, setDarkMode }) => {
             Subscriptions
           </Item>
         </Link>
-        <Hr />
+        {/* <Hr /> */}
         {!currentUser && (
           <>
+          <Hr />
             <Login>
               Sign in to like videos, comment, and subscribe.
               <Link to="signin" style={{ textDecoration: "none" }}>
@@ -127,9 +128,10 @@ const Menu = ({ darkMode, setDarkMode }) => {
                 </Button>
               </Link>
             </Login>
+            <Hr />
           </>
         )}
-        <Hr />
+        {/* <Hr /> */}
         <Item onClick={() => setDarkMode(!darkMode)}>
           <SettingsBrightnessOutlinedIcon />
           {darkMode ? "Light" : "Dark"} Mode
