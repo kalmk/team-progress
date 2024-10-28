@@ -4,6 +4,7 @@ Current website view:
 
 # assignments for the team members
 - part of the project are assigned for individual members
+- look at "issues"
 
 ## important message for the team members:
 1) make sure to fork this repo
