@@ -106,19 +106,21 @@ const Menu = ({ darkMode, setDarkMode }) => {
             Explore
           </Item>
         </Link>
-        <Link
-          to="subscriptions"
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <Item>
-            <SubscriptionsOutlinedIcon />
-            Subscriptions
-          </Item>
-        </Link>
+        {currentUser && (
+          <Link
+            to="subscriptions"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Item>
+              <SubscriptionsOutlinedIcon />
+              Subscriptions
+            </Item>
+          </Link>
+        )}
         {/* <Hr /> */}
         {!currentUser && (
           <>
-          <Hr />
+            <Hr />
             <Login>
               Sign in to like videos, comment, and subscribe.
               <Link to="signin" style={{ textDecoration: "none" }}>
