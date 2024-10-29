@@ -54,27 +54,12 @@ const Button = styled.button`
   color: ${({ theme }) => theme.textSoft};
 `;
 
-const More = styled.div`
-  display: flex;
-  margin-top: 10px;
-  font-size: 12px;
-  color: ${({ theme }) => theme.textSoft};
-`;
-
-const Links = styled.div`
-  margin-left: 50px;
-`;
-
-const Link = styled.span`
-  margin-left: 30px;
-`;
-
 const SignIn = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -82,7 +67,7 @@ const SignIn = () => {
     try {
       const res = await axios.post("/auth/signin", { name, password });
       dispatch(loginSuccess(res.data));
-      navigate("/")
+      navigate("/");
     } catch (err) {
       dispatch(loginFailure());
     }
@@ -99,9 +84,9 @@ const SignIn = () => {
             img: result.user.photoURL,
           })
           .then((res) => {
-            console.log(res)
+            console.log(res);
             dispatch(loginSuccess(res.data));
-            navigate("/")
+            navigate("/");
           });
       })
       .catch((error) => {
@@ -110,7 +95,6 @@ const SignIn = () => {
   };
 
   //TODO: REGISTER FUNCTIONALITY
-
 
   return (
     <Container>
@@ -142,14 +126,6 @@ const SignIn = () => {
         />
         <Button>Sign up</Button>
       </Wrapper>
-      <More>
-        English(USA)
-        <Links>
-          <Link>Help</Link>
-          <Link>Privacy</Link>
-          <Link>Terms</Link>
-        </Links>
-      </More>
     </Container>
   );
 };
