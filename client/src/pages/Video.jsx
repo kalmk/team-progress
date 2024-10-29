@@ -14,6 +14,7 @@ import axios from "axios";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
 import Recommendation from "../components/Recommendation";
+import moment from "moment"
 
 const Container = styled.div`
   display: flex;
@@ -165,7 +166,7 @@ const Video = () => {
         <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo?.views} views • {currentVideo?.createdAt}
+            {currentVideo?.views} views • {moment(currentVideo?.createdAt).format('MMMM D, YYYY')}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
