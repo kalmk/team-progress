@@ -35,7 +35,7 @@ const Button = styled.button`
   border: none;
   border-radius: 3px;
   height: max-content;
-  padding: 10px 20px;
+  padding: 1px 5px;
   cursor: pointer;
 `;
 
