@@ -28,32 +28,64 @@ const Input = styled.input`
   width: 100%;
 `;
 
-const Comments = ({videoId}) => {
+const Button = styled.button`
+  background-color: #cc1a00;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  height: max-content;
+  padding: 1px 5px;
+  cursor: pointer;
+`;
 
+const Comments = ({ videoId }) => {
   const { currentUser } = useSelector((state) => state.user);
-
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const res = await axios.get(`/comments/${videoId}`);
         setComments(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     fetchComments();
   }, [videoId]);
 
-  //TODO: ADD NEW COMMENT FUNCTIONALITY
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const handleCommentSubmit = async () => {
+    try {
+      const res = await axios.post(`/comments`, {
+        videoId,
+        desc: comment,
+      });
+      setComments([res.data, ...comments]);
+      setComment(''); // Clear the input after submission
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Container>
       <NewComment>
-      <Avatar src={currentUser ? currentUser.img : ""} />
-        <Input placeholder="Add a comment..." />
+        <Avatar src={currentUser ? currentUser.img : ""} />
+        <Input
+          value={comment}
+          onChange={handleCommentChange}
+          placeholder="Add a comment..."
+        />
+        <Button onClick={handleCommentSubmit}>Submit Comment</Button>
       </NewComment>
-      {comments.map(comment=>(
-        <Comment key={comment._id} comment={comment}/>
+      {comments.map((comment) => (
+        <Comment key={comment._id} comment={comment} />
       ))}
     </Container>
   );
