@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import moment from "moment";
 
 const Container = styled.div`
   display: flex;
@@ -20,6 +21,7 @@ const Details = styled.div`
   gap: 10px;
   color: ${({ theme }) => theme.text};
 `;
+
 const Name = styled.span`
   font-size: 13px;
   font-weight: 500;
@@ -42,17 +44,19 @@ const Comment = ({ comment }) => {
   useEffect(() => {
     const fetchComment = async () => {
       const res = await axios.get(`/users/find/${comment.userId}`);
-      setChannel(res.data)
+      setChannel(res.data);
     };
     fetchComment();
   }, [comment.userId]);
+
+  const formattedDate = moment(comment.createdAt).fromNow();
 
   return (
     <Container>
       <Avatar src={channel.img} />
       <Details>
         <Name>
-          {channel.name} <Date>1 day ago</Date>
+          {channel.name} <Date>{formattedDate}</Date>
         </Name>
         <Text>{comment.desc}</Text>
       </Details>
