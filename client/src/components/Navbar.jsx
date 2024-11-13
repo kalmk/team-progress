@@ -4,7 +4,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 import Upload from "./Upload";
@@ -81,11 +81,14 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const { currentUser } = useSelector((state) => state.user);
+  const location = useLocation();
 
   const handleSignOut = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  const isVideoPage = location.pathname.includes("/video/");
 
   return (
     <>
@@ -100,7 +103,9 @@ const Navbar = () => {
           </Search>
           {currentUser ? (
             <User>
-              <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
+              {!isVideoPage && (
+                <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
+              )}
               <Avatar src={currentUser.img} />
               {currentUser.name}
               <Button onClick={handleSignOut}>
