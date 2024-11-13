@@ -3,8 +3,10 @@ import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/userSlice";
 import Upload from "./Upload";
 
 const Container = styled.div`
@@ -43,7 +45,6 @@ const Input = styled.input`
   background-color: transparent;
   outline: none;
   color: ${({ theme }) => theme.text};
-
 `;
 
 const Button = styled.button`
@@ -75,10 +76,17 @@ const Avatar = styled.img`
 `;
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const { currentUser } = useSelector((state) => state.user);
+
+  const handleSignOut = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <>
       <Container>
@@ -88,13 +96,17 @@ const Navbar = () => {
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
             />
-            <SearchOutlinedIcon onClick={()=>navigate(`/search?q=${q}`)}/>
+            <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
           </Search>
           {currentUser ? (
             <User>
               <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
               <Avatar src={currentUser.img} />
               {currentUser.name}
+              <Button onClick={handleSignOut}>
+                <ExitToAppOutlinedIcon />
+                Sign Out
+              </Button>
             </User>
           ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>
