@@ -98,6 +98,7 @@ const Navbar = () => {
             <Input
               placeholder="Search"
               onChange={(e) => setQ(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && navigate(`/search?q=${q}`)}
             />
             <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
           </Search>
