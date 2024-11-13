@@ -33,9 +33,9 @@ const Button = styled.button`
   font-weight: 500;
   color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 1px;
   height: max-content;
-  padding: 1px 5px;
+  padding: 10px 10px;
   cursor: pointer;
 `;
 
@@ -82,7 +82,7 @@ const Comments = ({ videoId }) => {
           onChange={handleCommentChange}
           placeholder="Add a comment..."
         />
-        <Button onClick={handleCommentSubmit}>Submit Comment</Button>
+        <Button onClick={handleCommentSubmit}>Comment</Button>
       </NewComment>
       {comments.map((comment) => (
         <Comment key={comment._id} comment={comment} />
