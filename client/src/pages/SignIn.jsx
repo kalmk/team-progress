@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
-// import { async } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -73,6 +73,20 @@ const SignIn = () => {
     }
   };
 
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    dispatch(loginStart());
+    try {
+      const res = await axios.post("/auth/signup", { name, email, password });
+
+      dispatch(loginFailure());
+
+      navigate("/", { state: { loggedIn: false } });
+    } catch (err) {
+      dispatch(loginFailure());
+    }
+  };
+
   const signInWithGoogle = async () => {
     dispatch(loginStart());
     signInWithPopup(auth, provider)
@@ -93,8 +107,6 @@ const SignIn = () => {
         dispatch(loginFailure());
       });
   };
-
-  //TODO: REGISTER FUNCTIONALITY
 
   return (
     <Container>
@@ -124,7 +136,7 @@ const SignIn = () => {
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button>Sign up</Button>
+        <Button onClick={handleSignUp}>Sign up</Button>{" "}
       </Wrapper>
     </Container>
   );
