@@ -1,3 +1,6 @@
+## requirements to run
+- nodejs
+
 ## how to prepare the environment
 1) cd into "client"
 2) type "npm install"
@@ -7,7 +10,7 @@
     - .env reference is on reference.txt
 
 ## how to run
-1) cd into server first!
+1) cd into server first
 2) npm start
 3) open an another terminal and cd into client
 4) npm start
