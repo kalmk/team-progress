@@ -2,19 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
-// import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-// import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../components/Comments";
-//import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
 import Recommendation from "../components/Recommendation";
-import moment from "moment"
+import moment from "moment";
 
 const Container = styled.div`
   display: flex;
@@ -24,6 +21,7 @@ const Container = styled.div`
 const Content = styled.div`
   flex: 5;
 `;
+
 const VideoWrapper = styled.div``;
 
 const Title = styled.h1`
@@ -116,6 +114,16 @@ const VideoFrame = styled.video`
   object-fit: cover;
 `;
 
+const DeleteButton = styled.button`
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+
 const Video = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { currentVideo } = useSelector((state) => state.video);
@@ -155,7 +163,17 @@ const Video = () => {
     dispatch(subscription(channel._id));
   };
 
-  //TODO: DELETE VIDEO FUNCTIONALITY
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/videos/${currentVideo._id}`, {
+        headers: { Authorization: `Bearer ${currentUser.token}` },
+      });
+      // Redirect to the home page or show a success message after deletion
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Error deleting video", err);
+    }
+  };
 
   return (
     <Container>
@@ -204,6 +222,10 @@ const Video = () => {
           </Subscribe>
         </Channel>
         <Hr />
+        {/* Show Delete Button if the current user is the video owner */}
+        {currentUser && currentUser._id === currentVideo?.userId && (
+          <DeleteButton onClick={handleDelete}>Delete Video</DeleteButton>
+        )}
         <Comments videoId={currentVideo?._id} />
       </Content>
       <Recommendation tags={currentVideo?.tags} />
