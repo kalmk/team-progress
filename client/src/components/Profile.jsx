@@ -70,10 +70,6 @@ const Label = styled.label`
 `;
 
 const Profile = ({ setOpen }) => {
-  const handleSignOut = () => {
-    dispatch(logout());
-    navigate("/");
-  };
 
   const { currentUser } = useSelector((state) => state.user); // Access currentUser from Redux
   const [img, setImg] = useState(undefined);
@@ -81,12 +77,6 @@ const Profile = ({ setOpen }) => {
   const [inputs, setInputs] = useState({});
   const dispatch = useDispatch(); // Use dispatch to dispatch logout action
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
 
   const uploadFile = (file, urlType) => {
     const storage = getStorage(app);
