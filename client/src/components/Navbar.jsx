@@ -77,6 +77,14 @@ const Avatar = styled.img`
   background-color: #999;
 `;
 
+const IconButton = styled.div`
+  cursor: pointer;
+`;
+
+const StyledSearchIcon = styled(SearchOutlinedIcon)`
+  cursor: pointer;
+`;
+
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -103,15 +111,19 @@ const Navbar = () => {
               onChange={(e) => setQ(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && navigate(`/search?q=${q}`)}
             />
-            <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
+            <StyledSearchIcon onClick={() => navigate(`/search?q=${q}`)} />
           </Search>
           {currentUser ? (
             <User>
               {!isVideoPage && (
-                <VideoCallOutlinedIcon onClick={() => setIsUploadOpen(true)} />
+                <IconButton onClick={() => setIsUploadOpen(true)}>
+                  <VideoCallOutlinedIcon />
+                </IconButton>
               )}
               {!isVideoPage && (
-                <PersonOutlineIcon onClick={() => setIsProfileOpen(true)} />
+                <IconButton onClick={() => setIsProfileOpen(true)}>
+                  <PersonOutlineIcon />
+                </IconButton>
               )}
               <Avatar src={currentUser.img} />
               {currentUser.name}
