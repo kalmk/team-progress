@@ -9,7 +9,8 @@ import {
 import app from "../firebase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux"; // Import useSelector to access currentUser
+import { useDispatch, useSelector } from "react-redux"; // Import useDispatch and useSelector
+import { logout } from "../redux/userSlice";
 
 const Container = styled.div`
   width: 100%;
@@ -69,10 +70,16 @@ const Label = styled.label`
 `;
 
 const Profile = ({ setOpen }) => {
+  const handleSignOut = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   const { currentUser } = useSelector((state) => state.user); // Access currentUser from Redux
   const [img, setImg] = useState(undefined);
   const [imgPerc, setImgPerc] = useState(0);
   const [inputs, setInputs] = useState({});
+  const dispatch = useDispatch(); // Use dispatch to dispatch logout action
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -90,7 +97,8 @@ const Profile = ({ setOpen }) => {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImgPerc(Math.round(progress));
       },
       (error) => {
@@ -125,13 +133,16 @@ const Profile = ({ setOpen }) => {
         img: inputs.profilePicUrl, // Use currentUser._id instead of userId
       });
 
-      setOpen(false);
-
       if (res.status === 200) {
-        navigate(`/profile/${currentUser._id}`); // Redirect to the profile page of the logged-in user
+        // Profile update successful, now log the user out
+        dispatch(logout()); // Dispatch logout action to clear user data
+        navigate("/"); // Redirect to login page or home page
+        window.location.reload(); // Refresh the page
       } else {
         alert("There was an error updating the profile.");
       }
+
+      setOpen(false); // Close the modal after profile update
     } catch (error) {
       console.error("Error uploading profile picture:", error);
       alert("An error occurred while uploading the profile picture.");
