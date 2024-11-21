@@ -142,7 +142,13 @@ const Video = () => {
         );
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
-      } catch (err) {}
+
+        // Increment views when the video is loaded
+        await axios.put(`/videos/view/${path}`);
+        
+      } catch (err) {
+        console.error("Error fetching data", err);
+      }
     };
     fetchData();
   }, [path, dispatch]);
@@ -151,6 +157,7 @@ const Video = () => {
     await axios.put(`/users/like/${currentVideo._id}`);
     dispatch(like(currentUser._id));
   };
+  
   const handleDislike = async () => {
     await axios.put(`/users/dislike/${currentVideo._id}`);
     dispatch(dislike(currentUser._id));
