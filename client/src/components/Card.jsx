@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import moment from "moment"
+import moment from "moment";
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
@@ -64,22 +64,28 @@ const Card = ({ type, video }) => {
     fetchChannel();
   }, [video.userId]);
 
+  const increment = async () => {
+    await axios.put(`/videos/view/${video._id}`);
+  };
+
+  // Handle click and increment views
+  const handleCardClick = () => {
+    increment();
+  };
+
   return (
     <Link to={`/video/${video._id}`} style={{ textDecoration: "none" }}>
-      <Container type={type}>
-        <Image
-          type={type}
-          src={video.imgUrl}
-        />
+      <Container type={type} onClick={handleCardClick}>
+        <Image type={type} src={video.imgUrl} />
         <Details type={type}>
-          <ChannelImage
-            type={type}
-            src={channel.img}
-          />
+          <ChannelImage type={type} src={channel.img} />
           <Texts>
             <Title>{video.title}</Title>
             <ChannelName>{channel.name}</ChannelName>
-            <Info>{video.views} views • {moment(video.createdAt).format('MMMM D, YYYY')}</Info>
+            <Info>
+              {video.views} views •{" "}
+              {moment(video.createdAt).format("MMMM D, YYYY")}
+            </Info>
           </Texts>
         </Details>
       </Container>

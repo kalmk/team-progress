@@ -142,10 +142,6 @@ const Video = () => {
         );
         setChannel(channelRes.data);
         dispatch(fetchSuccess(videoRes.data));
-
-        // Increment views when the video is loaded
-        await axios.put(`/videos/view/${path}`);
-        
       } catch (err) {
         console.error("Error fetching data", err);
       }
@@ -157,7 +153,7 @@ const Video = () => {
     await axios.put(`/users/like/${currentVideo._id}`);
     dispatch(like(currentUser._id));
   };
-  
+
   const handleDislike = async () => {
     await axios.put(`/users/dislike/${currentVideo._id}`);
     dispatch(dislike(currentUser._id));
@@ -191,7 +187,8 @@ const Video = () => {
         <Title>{currentVideo?.title}</Title>
         <Details>
           <Info>
-            {currentVideo?.views} views • {moment(currentVideo?.createdAt).format('MMMM D, YYYY')}
+            {currentVideo?.views} views •{" "}
+            {moment(currentVideo?.createdAt).format("MMMM D, YYYY")}
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
