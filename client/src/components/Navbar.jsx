@@ -4,10 +4,12 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline"; // Profile icon
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/userSlice";
 import Upload from "./Upload";
+import Profile from "./Profile";
 
 const Container = styled.div`
   position: sticky;
@@ -78,7 +80,8 @@ const Avatar = styled.img`
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [q, setQ] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
@@ -105,8 +108,9 @@ const Navbar = () => {
           {currentUser ? (
             <User>
               {!isVideoPage && (
-                <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
+                <VideoCallOutlinedIcon onClick={() => setIsUploadOpen(true)} />
               )}
+              <PersonOutlineIcon onClick={() => setIsProfileOpen(true)} />
               <Avatar src={currentUser.img} />
               {currentUser.name}
               <Button onClick={handleSignOut}>
@@ -124,7 +128,8 @@ const Navbar = () => {
           )}
         </Wrapper>
       </Container>
-      {open && <Upload setOpen={setOpen} />}
+      {isUploadOpen && <Upload setOpen={setIsUploadOpen} />}
+      {isProfileOpen && <Profile setOpen={setIsProfileOpen} />}
     </>
   );
 };
