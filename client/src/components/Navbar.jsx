@@ -110,7 +110,9 @@ const Navbar = () => {
               {!isVideoPage && (
                 <VideoCallOutlinedIcon onClick={() => setIsUploadOpen(true)} />
               )}
-              <PersonOutlineIcon onClick={() => setIsProfileOpen(true)} />
+              {!isVideoPage && (
+                <PersonOutlineIcon onClick={() => setIsProfileOpen(true)} />
+              )}
               <Avatar src={currentUser.img} />
               {currentUser.name}
               <Button onClick={handleSignOut}>
